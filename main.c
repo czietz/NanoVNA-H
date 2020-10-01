@@ -521,28 +521,31 @@ static const I2SConfig i2sconfig = {
 static void cmd_data(BaseSequentialStream *chp, int argc, char *argv[])
 {
     int sel = 0;
+    float (*array)[2];
     if (argc == 1)
         sel = atoi(argv[0]);
     if (sel < 0 || sel > 6) {
         chprintf(chp, "usage: data [array]\r\n");
     } else {
         if (sel > 1) 
-            sel = sel-2; 
+            array = cal_data[sel-2];
+        else
+            array = measured[sel];
         chMtxLock(&mutex_sweep);
         for (int i = 0; i < sweep_points; i++) {
 #ifndef __USE_STDIO__
             // WARNING: chprintf doesn't support proper float formatting
-            chprintf(chp, "%f %f\r\n", measured[sel][i][0], measured[sel][i][1]);
+            chprintf(chp, "%f %f\r\n", array[i][0], array[i][1]);
 #else
             // printf floating point losslessly: float="%.9g", double="%.17g"
             char tmpbuf[20];
             int leng;
-            leng = snprintf(tmpbuf, sizeof(tmpbuf), "%.9g", measured[sel][i][0]);
+            leng = snprintf(tmpbuf, sizeof(tmpbuf), "%.9g", array[i][0]);
             for (int j=0; j < leng; j++) {
                 streamPut(chp, (uint8_t)tmpbuf[j]); 
             }
             streamPut(chp, (uint8_t)' '); 
-            leng = snprintf(tmpbuf, sizeof(tmpbuf), "%.9g", measured[sel][i][1]);
+            leng = snprintf(tmpbuf, sizeof(tmpbuf), "%.9g", array[i][1]);
             for (int j=0; j < leng; j++) {
                 streamPut(chp, (uint8_t)tmpbuf[j]); 
             }
