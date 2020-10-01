@@ -122,7 +122,11 @@
  * @brief   Enables the RTC subsystem.
  */
 #if !defined(HAL_USE_RTC) || defined(__DOXYGEN__)
+#ifdef __CMD_TIME__
 #define HAL_USE_RTC                 TRUE
+#else
+#define HAL_USE_RTC                 FALSE
+#endif
 #endif
 
 /**
