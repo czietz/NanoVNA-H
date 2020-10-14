@@ -1571,10 +1571,13 @@ void draw_frequencies(void)
 
 void draw_cal_status(void)
 {
-  int x = 0;
-  int y = 100;
 #define YSTEP 7
-  ili9341_fill(0, y, 10, 6*YSTEP, 0x0000);
+  int x = 0;
+  int y = 100-YSTEP;
+  ili9341_fill(0, y, 10, 7*YSTEP, 0x0000);
+  if (sweep_avg)
+      ili9341_drawstring_5x7("AV", x, y, RGBHEX(0xff6a00), 0x0000);
+  y += YSTEP;
   if (cal_status & CALSTAT_APPLY) {
     char c[3] = "C0";
     c[1] += lastsaveid;
@@ -1814,10 +1817,13 @@ void draw_frequencies(void)
 void
 draw_cal_status(void)
 {
-  int x = 0;
-  int y = 100;
 #define YSTEP 13
-  ili9341_fill(0, y, 14, 6*YSTEP, 0x0000);
+  int x = 0;
+  int y = 100-YSTEP;
+  ili9341_fill(0, y, 14, 7*YSTEP, 0x0000);
+  if (sweep_avg)
+      ili9341_drawstring_7x13("AV", x, y, RGBHEX(0xff6a00), 0x0000);
+  y += YSTEP;
   if (cal_status & CALSTAT_APPLY) {
     char c[3] = "C0";
     c[1] += lastsaveid;

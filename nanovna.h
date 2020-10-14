@@ -270,6 +270,7 @@ extern uint16_t redraw_request;
 
 extern int16_t vbat;
 extern bool pll_lock_failed;
+extern bool sweep_avg;
 
 
 /*
