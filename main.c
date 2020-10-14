@@ -714,7 +714,7 @@ static void sweep_sample(float data[2], uint16_t avg)
         return;
     float acc[2];
     for (uint32_t j=1; j < avg; j++) {
-        wait_dsp(1);
+        wait_dsp(3);
         (*sample_func)(acc);
         data[0] += acc[0];
         data[1] += acc[1];
