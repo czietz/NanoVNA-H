@@ -1524,8 +1524,13 @@ static void cmd_cal(BaseSequentialStream *chp, int argc, char *argv[])
     cal_interpolate(s);
     redraw_request |= REDRAW_CAL_STATUS;
     return;
+  } else if (strcmp(cmd, "avg") == 0) {
+    if (argc > 1)
+      sweep_avg = atoi(argv[1])!=0;
+    redraw_request |= REDRAW_CAL_STATUS;
+    return;
   } else {
-    chprintf(chp, "usage: cal [load|open|short|thru|isoln|done|reset|on|off|in]\r\n");
+    chprintf(chp, "usage: cal [load|open|short|thru|isoln|done|reset|on|off|in|avg]\r\n");
     return;
   }
 }
